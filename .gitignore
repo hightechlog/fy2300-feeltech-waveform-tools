@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+build/
+dist/
+*.spec
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+SDS00004.csv
