@@ -89,6 +89,19 @@ This script:
 
 ---
 
+## Screenshots
+
+### Main GUI
+![Main GUI](images/gui-main.png)
+
+### CSV segment preview
+![CSV segment preview](images/gui-csv-preview.png)
+
+### Instrument / output example
+![Instrument output example](images/output-example.png)
+
+---
+
 ## Important notes
 
 - The current implementation is focused on the **main channel (CH1)**.
