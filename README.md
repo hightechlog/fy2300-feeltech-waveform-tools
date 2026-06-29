@@ -1,55 +1,55 @@
 # FeelTech FY2300 20M Arbitrary Waveform Tools
 
-Herramientas en Python para trabajar con el generador de funciones/arbitrario **FeelTech FY2300 20M**.
+Python tools for working with the **FeelTech FY2300 20M** function / arbitrary waveform generator.
 
-Este proyecto reúne dos piezas principales:
+This repository currently includes three main components:
 
 1. **`fy2300_serial.py`**  
-   Biblioteca Python para controlar el FY2300 por puerto serie mediante comandos ASCII confirmados con hardware real.
+   A Python serial library for controlling the FY2300 through ASCII commands validated with real hardware.
 
 2. **`fy2300_gui_simple_v3.py`**  
-   Interfaz gráfica simple en Tkinter para:
-   - configurar ondas comunes,
-   - ajustar frecuencia, amplitud, offset y duty cycle,
-   - seleccionar atenuación 0 dB / 20 dB,
-   - cargar una forma arbitraria desde un CSV de osciloscopio,
-   - enviar la forma al FY2300 usando `arb2`.
+   A simple Tkinter GUI that lets users:
+   - configure common waveforms,
+   - adjust frequency, amplitude, offset, and duty cycle,
+   - select 0 dB / 20 dB attenuation,
+   - load an arbitrary waveform from an oscilloscope CSV file,
+   - upload it to the FY2300 using `arb2`.
 
-También incluye:
-
-- **`EMISION_SintReal_fy2300_RUIDO.py`**: ejemplo funcional que toma un segmento real de `SDS00004.csv`, le añade ruido blanco controlado y lo carga como forma arbitraria.
-
----
-
-## Motivación
-
-Al trabajar con repositorios existentes para equipos FeelTech, detectamos que el envío de datos para formas arbitrarias no resolvía correctamente nuestro caso de uso para el **FY2300 20M**, especialmente al intentar reproducir una forma de onda real medida en osciloscopio.
-
-Por ello se construyó una biblioteca específica orientada al flujo que sí funcionó en pruebas reales:
-
-- carga de forma arbitraria con `upload_waveform(...)`,
-- reproducción mediante `arb2`,
-- control de frecuencia, amplitud, offset, duty y atenuación desde Python,
-- y una GUI simple para que otros usuarios puedan reutilizar la herramienta sin editar código.
+3. **`EMISION_SintReal_fy2300_RUIDO.py`**  
+   A functional example that takes a real segment from `SDS00004.csv`, adds controlled white noise, and uploads it as an arbitrary waveform.
 
 ---
 
-## Archivos incluidos
+## Motivation
+
+When working with existing FeelTech-related repositories, we found that arbitrary waveform data upload did not correctly solve our specific use case for the **FY2300 20M**, especially when trying to reproduce a real waveform measured with an oscilloscope.
+
+For that reason, this project was built around a workflow that was actually validated in the lab:
+
+- arbitrary waveform upload through `upload_waveform(...)`,
+- playback through `arb2`,
+- frequency, amplitude, offset, duty, attenuation, and trigger control from Python,
+- and a simple GUI so that other users can reuse the tool without editing the scripts directly.
+
+---
+
+## Included files
 
 - `fy2300_serial.py`
 - `fy2300_gui_simple_v3.py`
 - `EMISION_SintReal_fy2300_RUIDO.py`
+- `DISCLAIMER.md`
 
 ---
 
-## Requisitos
+## Requirements
 
 - Python 3.10+
 - `numpy`
 - `matplotlib`
 - `pyserial`
 
-Instalación:
+Installation:
 
 ```bash
 pip install -r requirements.txt
@@ -57,7 +57,7 @@ pip install -r requirements.txt
 
 ---
 
-## Uso rápido
+## Quick start
 
 ### 1) GUI
 
@@ -65,50 +65,52 @@ pip install -r requirements.txt
 python fy2300_gui_simple_v3.py
 ```
 
-La GUI permite:
+The GUI allows you to:
 
-- probar conexión con el puerto COM,
-- configurar una onda común en el canal principal (CH1),
-- cargar un segmento desde un archivo CSV Siglent/Tektronix compatible,
-- enviarlo como `arb2`,
-- y previsualizar localmente la señal antes de transmitir.
+- test COM port communication,
+- configure a common waveform on the main channel (CH1),
+- load a signal segment from a compatible CSV file,
+- upload it as `arb2`,
+- preview the waveform locally before sending it to the instrument.
 
-### 2) Ejemplo con waveform real
+### 2) Real waveform example
 
 ```bash
 python EMISION_SintReal_fy2300_RUIDO.py
 ```
 
-Este script:
+This script:
 
-- lee `SDS00004.csv`,
-- extrae un segmento temporal,
-- lo adapta a 2048 puntos,
-- añade ruido blanco leve,
-- y lo envía como forma arbitraria al FY2300.
-
----
-
-## Notas importantes
-
-- La implementación actual está enfocada en el **canal principal (CH1)**.
-- La atenuación del equipo influye directamente en la amplitud observada.  
-  Se recomienda verificar explícitamente si el generador está en **0 dB** o **20 dB**.
-- La librería fue desarrollada para una ruta funcional específica validada en laboratorio, no como wrapper universal para todos los modelos FeelTech.
+- reads `SDS00004.csv`,
+- extracts a time segment,
+- adapts it to 2048 points,
+- adds mild white noise,
+- uploads it as an arbitrary waveform to the FY2300.
 
 ---
 
-## Estructura sugerida para futuras mejoras
+## Important notes
 
-- soporte formal para CH2,
-- presets guardables desde la GUI,
-- lectura de parámetros actuales del equipo,
-- empaquetado como módulo instalable,
-- pruebas automatizadas con hardware en banco.
+- The current implementation is focused on the **main channel (CH1)**.
+- Instrument attenuation directly affects the observed output amplitude.  
+  Always verify whether the generator is set to **0 dB** or **20 dB**.
+- The library was built for a specific workflow validated with real hardware, not as a universal wrapper for every FeelTech model.
+- Before using this software with laboratory equipment, read **`DISCLAIMER.md`**.
 
 ---
 
-## Licencia
+## Suggested future improvements
 
-Se incluye una licencia MIT como punto de partida para publicación abierta.  
-Si prefieres otra licencia para el repositorio público, cámbiala antes de publicar.
+- formal CH2 support,
+- GUI presets,
+- reading current instrument parameters,
+- packaging as an installable Python module,
+- automated tests with bench hardware.
+
+---
+
+## License
+
+This project is released under the MIT License.
+
+The MIT License already includes an "as is" / no warranty clause. In addition, this repository provides an explicit operational disclaimer in **`DISCLAIMER.md`** for hardware, lab, and equipment use.
